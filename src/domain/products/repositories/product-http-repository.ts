@@ -4,7 +4,7 @@ import { PRODUCT_ENDPOINTS } from "@/domain/products/constants";
 import { IProductRepository } from "./product-repository.interface";
 
 export class ProductHttpRepository implements IProductRepository {
-  async getAll(): Promise<Product[]> {
+  async getAll(): Promise<Array<Product>> {
     const { data } = await httpClient.get<Array<Product>>(
       PRODUCT_ENDPOINTS.list,
     );

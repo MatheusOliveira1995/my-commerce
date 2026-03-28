@@ -1,5 +1,5 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Container, Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import getQueryClient from "@/core/lib/get-query-client";
 import { productRepository } from "@/domain/products/repositories";
 import {
@@ -7,6 +7,7 @@ import {
   PRODUCTS_PER_PAGE,
 } from "@/domain/products/constants";
 import { ProductList } from "@/domain/products/components";
+import { ReactElement } from "react";
 
 interface PageProps {
   params: Promise<{ page: string }>;
@@ -33,7 +34,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProductsPage({ params }: PageProps) {
+export const revalidate = 3600; // Revalidate every 60 minutes
+
+const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
+  const { params } = props;
   const { page } = await params;
   const currentPage = Number(page);
 
@@ -54,4 +58,6 @@ export default async function ProductsPage({ params }: PageProps) {
       </Paper>
     </Stack>
   );
-}
+};
+
+export default ProductsPage;

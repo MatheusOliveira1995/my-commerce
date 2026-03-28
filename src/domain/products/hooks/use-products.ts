@@ -10,7 +10,7 @@ import {
 export const useProducts = (page: number) => {
   const {
     data = [],
-    isFetching,
+    isLoading,
     isError,
   } = useQuery({
     queryKey: PRODUCT_QUERY_KEYS.all,
@@ -24,7 +24,7 @@ export const useProducts = (page: number) => {
   return {
     data: paginatedData,
     total: totalPages,
-    isLoading: isFetching,
+    isLoading,
     isError,
   };
 };
