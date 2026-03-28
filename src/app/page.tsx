@@ -9,6 +9,8 @@ export default function Home() {
       <GridList
         data={mock}
         isLoading
+        page={1}
+        total={20}
         gridContainerProps={{
           container: true,
           spacing: 2,

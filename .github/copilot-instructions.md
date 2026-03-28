@@ -20,6 +20,7 @@ You are a Senior Frontend Engineer. Act as an expert in Next.js 14+, TypeScript,
 - Page components should use HydrationBoundary for SSR/SSG.
 - UI components must be presentational; logic stays in custom hooks.
 - Follow the Ice Cream Shop design context from the project requirements.
+- The import paths standard is to use '@/\*' for internal modules.
 
 # Rendering Strategy
 
