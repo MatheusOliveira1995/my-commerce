@@ -10,3 +10,11 @@ export interface Product {
     count: number;
   };
 }
+
+export interface ProductsPageResult {
+  items: Array<Product>;
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+}

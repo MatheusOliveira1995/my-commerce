@@ -44,8 +44,8 @@ const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: PRODUCT_QUERY_KEYS.all,
-    queryFn: () => productRepository.getAll(),
+    queryKey: PRODUCT_QUERY_KEYS.page(currentPage, PRODUCTS_PER_PAGE),
+    queryFn: () => productRepository.getPage(currentPage, PRODUCTS_PER_PAGE),
   });
 
   return (

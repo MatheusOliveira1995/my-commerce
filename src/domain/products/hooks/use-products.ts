@@ -9,22 +9,21 @@ import {
 
 export const useProducts = (page: number) => {
   const {
-    data = [],
-    isLoading,
+    data,
+    isFetching,
     isError,
   } = useQuery({
-    queryKey: PRODUCT_QUERY_KEYS.all,
-    queryFn: () => productRepository.getAll(),
+    queryKey: PRODUCT_QUERY_KEYS.page(page, PRODUCTS_PER_PAGE),
+    queryFn: () => productRepository.getPage(page, PRODUCTS_PER_PAGE),
   });
 
-  const totalPages = Math.ceil(data.length / PRODUCTS_PER_PAGE);
-  const start = (page - 1) * PRODUCTS_PER_PAGE;
-  const paginatedData = data.slice(start, start + PRODUCTS_PER_PAGE);
+
+  const productsPage = data;
 
   return {
-    data: paginatedData,
-    total: totalPages,
-    isLoading,
+    data: productsPage?.items ?? [],
+    total: productsPage?.totalPages ?? 0,
+    isLoading: isFetching,
     isError,
   };
 };
