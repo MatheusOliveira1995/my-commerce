@@ -9,10 +9,9 @@ interface ProductListProps {
   page: number;
 }
 
-export default function ProductList({ page }: ProductListProps) {
+export default function ProductList(props: ProductListProps) {
+  const { page } = props;
   const { data, total, isLoading } = useProducts(page);
-
-  console.log({ data, total, isLoading });
 
   return (
     <GridList<Product>

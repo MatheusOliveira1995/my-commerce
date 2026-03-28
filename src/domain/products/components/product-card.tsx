@@ -11,7 +11,6 @@ import { Product } from "@/domain/products/models/product";
 import Image from "next/image";
 import Link from "next/link";
 
-const IMAGE_SIZE = 150;
 interface ProductCardProps {
   product: Product;
 }
@@ -42,19 +41,37 @@ const ProductCard = (props: ProductCardProps): ReactElement => {
   return (
     <Card>
       <CardContent>
-        <Stack gap={2}>
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <Stack
+          direction={{ xs: "row", sm: "column" }}
+          spacing={2}
+          alignItems={{ xs: "center", sm: "stretch" }}
+          sx={{ "& > :first-of-type": { alignSelf: { sm: "center" } } }}
+        >
+          <Box
+            sx={{
+              position: "relative",
+              flexShrink: 0,
+              width: { xs: 72, sm: 120, md: 140, lg: 150 },
+              height: { xs: 72, sm: 120, md: 140, lg: 150 },
+              mx: { xs: 0, sm: "auto" },
+              display: "grid",
+              placeItems: "center",
+              overflow: "hidden",
+            }}
+          >
             <Image
               src={product.image}
               alt={product.title}
-              width={IMAGE_SIZE}
-              height={IMAGE_SIZE}
+              fill
+              sizes="(max-width:600px) 72px, (max-width:900px) 120px, (max-width:1200px) 140px, 150px"
+              style={{
+                objectFit: "contain",
+                objectPosition: "center center",
+              }}
             />
           </Box>
-          <Box>
+          <Stack sx={{ flex: 1, minWidth: 0 }} spacing={1.5}>
             <ProductDetail product={product} />
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               variant="outlined"
               component={Link}
@@ -64,7 +81,7 @@ const ProductCard = (props: ProductCardProps): ReactElement => {
             >
               Ver mais
             </Button>
-          </Box>
+          </Stack>
         </Stack>
       </CardContent>
     </Card>
