@@ -1,15 +1,17 @@
-import { ReactElement } from "react";
+"use client";
+import { ReactElement, useState } from "react";
 import {
   Box,
   Button,
   Card,
   CardContent,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
-import { Product } from "@/domain/products/models/product";
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "@/domain/products/models/product";
 
 interface ProductCardProps {
   product: Product;
@@ -38,6 +40,8 @@ const ProductDetail = (props: ProductDetailProps): ReactElement => {
 
 const ProductCard = (props: ProductCardProps): ReactElement => {
   const { product } = props;
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
   return (
     <Card>
       <CardContent>
@@ -54,22 +58,33 @@ const ProductCard = (props: ProductCardProps): ReactElement => {
               width: { xs: 72, sm: 120, md: 140, lg: 150 },
               height: { xs: 72, sm: 120, md: 140, lg: 150 },
               mx: { xs: 0, sm: "auto" },
-              display: "grid",
-              placeItems: "center",
               overflow: "hidden",
+              borderRadius: 1,
             }}
           >
+            {!isImageLoaded && (
+              <Skeleton
+                variant="rounded"
+                animation="wave"
+                sx={{ position: "absolute", inset: 0 }}
+              />
+            )}
             <Image
               src={product.image}
               alt={product.title}
               fill
               sizes="(max-width:600px) 72px, (max-width:900px) 120px, (max-width:1200px) 140px, 150px"
+              onLoad={() => setIsImageLoaded(true)}
+              onError={() => setIsImageLoaded(true)}
               style={{
                 objectFit: "contain",
-                objectPosition: "center center",
+                objectPosition: "center",
+                opacity: isImageLoaded ? 1 : 0,
+                transition: "opacity 220ms ease",
               }}
             />
           </Box>
+
           <Stack sx={{ flex: 1, minWidth: 0 }} spacing={1.5}>
             <ProductDetail product={product} />
             <Button
@@ -77,7 +92,7 @@ const ProductCard = (props: ProductCardProps): ReactElement => {
               component={Link}
               size="large"
               fullWidth
-              href={`/products/${product.id}`}
+              href={"/products/" + product.id}
             >
               Ver mais
             </Button>

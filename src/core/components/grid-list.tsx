@@ -5,7 +5,7 @@ import GridListPagination from "@/core/components/grid-list-pagination";
 interface GridListProps<T> {
   data: Array<T>;
   renderItem: (item: T) => ReactNode;
-  renderSkeleton?: (index: number) => ReactNode;
+  renderSkeleton?: () => ReactNode;
   total: number;
   gridContainerProps?: ComponentProps<typeof Grid>;
   gridItemProps?: Omit<ComponentProps<typeof Grid>, "container" | "children">;
@@ -32,7 +32,7 @@ const GridList = <T extends object>(props: GridListProps<T>): ReactElement => {
           ? Array.from({ length: total }).map((_, i) => (
               <Grid {...gridItemProps} key={`skeleton-${i}`}>
                 {renderSkeleton ? (
-                  renderSkeleton(i)
+                  renderSkeleton()
                 ) : (
                   <Skeleton variant="rectangular" height={200} />
                 )}

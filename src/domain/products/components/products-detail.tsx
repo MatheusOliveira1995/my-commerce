@@ -1,8 +1,17 @@
 "use client";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { useProduct } from "@/domain/products/hooks";
+import ProductDetailSkeleton from "@/domain/products/components/product-detail-skeleton";
 import Image from "next/image";
-import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 interface ProductsDetailProps {
   id: number;
@@ -27,10 +36,18 @@ const DETAIL_SX = {
     justifyContent: "center",
     alignItems: "center",
   },
+  imageFrame: {
+    position: "relative",
+    width: { xs: 132, sm: 176, md: 234 },
+    height: { xs: 132, sm: 176, md: 234 },
+    overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   image: {
     objectFit: "contain",
-    width: "auto",
-    height: "78%",
+    objectPosition: "center",
   },
   cardContent: {
     p: { xs: 2.5, md: 4 },
@@ -61,6 +78,7 @@ const DETAIL_SX = {
 
 const ProductInfoDetail = (props: ProductInfoDetailProps): ReactElement => {
   const { title, value } = props;
+
   return (
     <Card>
       <CardContent
@@ -84,7 +102,12 @@ const ProductInfoDetail = (props: ProductInfoDetailProps): ReactElement => {
 
 const ProductsDetail = (props: ProductsDetailProps): ReactElement => {
   const { id } = props;
-  const { data } = useProduct(id);
+  const { data, isLoading } = useProduct(id);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  if (isLoading) {
+    return <ProductDetailSkeleton />;
+  }
 
   if (!data) {
     return <Typography variant="body1">Produto não encontrado</Typography>;
@@ -93,13 +116,25 @@ const ProductsDetail = (props: ProductsDetailProps): ReactElement => {
   return (
     <Box sx={DETAIL_SX.root}>
       <Box sx={DETAIL_SX.imageContainer}>
-        <Image
-          src={data.image}
-          alt={data.title}
-          width={520}
-          height={520}
-          style={DETAIL_SX.image}
-        />
+        <Box sx={DETAIL_SX.imageFrame}>
+          {!isImageLoaded && (
+            <Skeleton
+              variant="rounded"
+              animation="wave"
+              sx={{ position: "absolute", inset: 0, borderRadius: 2 }}
+            />
+          )}
+
+          <Image
+            src={data.image}
+            alt={data.title}
+            fill
+            sizes="(max-width:600px) 132px, (max-width:900px) 176px, 234px"
+            style={{ ...DETAIL_SX.image, opacity: isImageLoaded ? 1 : 0 }}
+            onLoad={() => setIsImageLoaded(true)}
+            onError={() => setIsImageLoaded(true)}
+          />
+        </Box>
       </Box>
       <Card>
         <CardContent sx={DETAIL_SX.cardContent}>
