@@ -13,9 +13,7 @@ interface GridListProps<T> {
   isLoading?: boolean;
 }
 
-const GridList = <T extends Record<string, unknown>>(
-  props: GridListProps<T>,
-): ReactElement => {
+const GridList = <T extends object>(props: GridListProps<T>): ReactElement => {
   const {
     data,
     isLoading = false,

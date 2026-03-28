@@ -21,6 +21,7 @@ You are a Senior Frontend Engineer. Act as an expert in Next.js 14+, TypeScript,
 - UI components must be presentational; logic stays in custom hooks.
 - Follow the Ice Cream Shop design context from the project requirements.
 - The import paths standard is to use '@/\*' for internal modules.
+- The props should not be destructured in the component signature. Instead, use a single props object and destructure inside the component body.
 
 # Rendering Strategy
 
