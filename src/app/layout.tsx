@@ -3,6 +3,7 @@ import MenuToolbar from "@/core/components/menu-toolbar";
 import { Container } from "@mui/material";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import PageFooter from "@/core/components/page-footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function RootLayout({
             <MenuToolbar />
             {children}
           </Container>
+          <PageFooter />
         </RootProvider>
       </body>
     </html>
