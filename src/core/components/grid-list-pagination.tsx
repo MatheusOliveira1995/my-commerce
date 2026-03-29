@@ -1,7 +1,7 @@
 "use client";
 
-import { ChangeEvent, ReactElement } from "react";
-import { Pagination } from "@mui/material";
+import { ChangeEvent, ReactElement, useTransition } from "react";
+import { Box, CircularProgress, Pagination } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 
 interface GridListPaginationProps {
@@ -15,20 +15,34 @@ const GridListPagination = ({
 }: GridListPaginationProps): ReactElement => {
   const pathname = usePathname();
   const { push } = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const handlePageChange = (_: ChangeEvent<unknown>, value: number) => {
     const basePath = pathname.replace(/\/\d+$/, "");
-    push(basePath + "/" + value);
+    startTransition(() => {
+      push(basePath + "/" + value);
+    });
   };
 
   return (
-    <Pagination
-      variant="outlined"
-      shape="rounded"
-      count={total}
-      onChange={handlePageChange}
-      page={page}
-    />
+    <Box
+      sx={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 1,
+      }}
+    >
+      <Pagination
+        variant="outlined"
+        shape="rounded"
+        count={total}
+        onChange={handlePageChange}
+        page={page}
+        disabled={isPending}
+      />
+      {isPending && <CircularProgress size={20} />}
+    </Box>
   );
 };
 
