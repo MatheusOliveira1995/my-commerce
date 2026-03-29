@@ -8,6 +8,6 @@ export const useProduct = (id: number) => {
   return useQuery({
     queryKey: PRODUCT_QUERY_KEYS.detail(id),
     queryFn: () => productRepository.getById(id),
-    enabled: !!id,
+    enabled: Boolean(id),
   });
 };

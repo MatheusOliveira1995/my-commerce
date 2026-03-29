@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import ProductsDetail from "@/domain/products/components/products-detail";
 
 interface ProductsDetailPageProps {
