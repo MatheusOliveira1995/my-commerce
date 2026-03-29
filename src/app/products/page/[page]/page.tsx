@@ -15,7 +15,7 @@ interface PageProps {
 
 const PRODUCTS_PAGE_LAYOUT_SX = {
   contentStack: {
-    spacing: { xs: 2, md: 5 },
+    gap: { xs: 2, md: 5 },
   },
   paper: {
     p: { xs: 0, md: 3 },
