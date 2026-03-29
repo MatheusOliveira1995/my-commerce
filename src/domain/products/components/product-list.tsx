@@ -4,6 +4,7 @@ import { GridList } from "@/core/components";
 import { ProductCard } from "@/domain/products/components";
 import { ProductListSkeleton } from "@/domain/products/components";
 import { useProducts } from "@/domain/products/hooks";
+import { PRODUCTS_PER_PAGE } from "@/domain/products/constants";
 import { Product } from "@/domain/products/models/product";
 
 interface ProductListProps {
@@ -20,6 +21,7 @@ export default function ProductList(props: ProductListProps) {
       isLoading={isLoading}
       page={page}
       total={total}
+      skeletonCount={PRODUCTS_PER_PAGE}
       gridContainerProps={{
         container: true,
         direction: "row",

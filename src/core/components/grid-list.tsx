@@ -7,6 +7,7 @@ interface GridListProps<T> {
   renderItem: (item: T) => ReactNode;
   renderSkeleton?: () => ReactNode;
   total: number;
+  skeletonCount?: number;
   gridContainerProps?: ComponentProps<typeof Grid>;
   gridItemProps?: Omit<ComponentProps<typeof Grid>, "container" | "children">;
   page: number;
@@ -20,6 +21,7 @@ const GridList = <T extends object>(props: GridListProps<T>): ReactElement => {
     renderItem,
     renderSkeleton,
     total = 0,
+    skeletonCount = 8,
     gridContainerProps = {},
     gridItemProps = {},
     page = 1,
@@ -29,7 +31,7 @@ const GridList = <T extends object>(props: GridListProps<T>): ReactElement => {
     <Stack gap={3}>
       <Grid {...gridContainerProps}>
         {isLoading
-          ? Array.from({ length: total }).map((_, i) => (
+          ? Array.from({ length: skeletonCount }).map((_, i) => (
               <Grid {...gridItemProps} key={`skeleton-${i}`}>
                 {renderSkeleton ? (
                   renderSkeleton()
