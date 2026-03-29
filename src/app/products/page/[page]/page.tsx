@@ -36,7 +36,9 @@ export async function generateStaticParams() {
     return Array.from({ length: totalPages }, (_, i) => ({
       page: String(i + 1),
     }));
-  } catch {
+  } catch (e) {
+    throw new Error("Failed to generate static params for products page: " + e);
+
     return [{ page: "1" }];
   }
 }
