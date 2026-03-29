@@ -1,3 +1,7 @@
+<!--
+Os trechos a seguir representam os principais prompts que foram utilizados para a implementação deste projeto. Eles estão separados por cada fase que indica em que etapa do desenvolvimento eles foram executados. Não necessariamente eles foram executados na ordem em que aparecem nos arquivos.
+-->
+
 ## Fase 1 - Base
 
 - Faça um resumo, abrangendo tudo que eu devo saber de como funciona a integração entre o react-query e o next. O que eu devo saber sobre como o cache é controlado, sobre configurações e sobre diferenças no uso do react query em uma SPA. Também diga quais erros são comuns para que eu possa evitá-los.
