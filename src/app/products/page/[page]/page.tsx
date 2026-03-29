@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Paper, Stack, Typography } from "@mui/material";
 import getQueryClient from "@/core/lib/get-query-client";
@@ -7,7 +8,8 @@ import {
   PRODUCTS_PER_PAGE,
 } from "@/domain/products/constants";
 import { ProductList } from "@/domain/products/components";
-import { ReactElement } from "react";
+import { notFound } from "next/navigation";
+import { HttpError } from "@/core/lib/http-error";
 
 interface PageProps {
   params: Promise<{ page: string }>;
@@ -58,7 +60,13 @@ const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
       queryKey: PRODUCT_QUERY_KEYS.page(currentPage, PRODUCTS_PER_PAGE),
       queryFn: () => productRepository.getPage(currentPage, PRODUCTS_PER_PAGE),
     });
-  } catch {}
+  } catch (error) {
+    if (error instanceof HttpError && error.status === 404) {
+      notFound();
+    }
+
+    throw error;
+  }
 
   return (
     <Stack sx={PRODUCTS_PAGE_LAYOUT_SX.contentStack}>

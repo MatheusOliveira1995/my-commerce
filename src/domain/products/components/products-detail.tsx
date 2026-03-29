@@ -102,11 +102,19 @@ const ProductInfoDetail = (props: ProductInfoDetailProps): ReactElement => {
 
 const ProductsDetail = (props: ProductsDetailProps): ReactElement => {
   const { id } = props;
-  const { data, isLoading } = useProduct(id);
+  const { data, isLoading, isError } = useProduct(id);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   if (isLoading) {
     return <ProductDetailSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <Typography variant="body1">
+        Nao foi possivel carregar os detalhes do produto.
+      </Typography>
+    );
   }
 
   if (!data) {
