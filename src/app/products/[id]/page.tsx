@@ -33,6 +33,7 @@ const ProductsDetailPage = async (
       queryFn: () => productRepository.getById(id),
     });
   } catch (error) {
+    console.error(`Failed to prefetch product detail for id ${id}`, error);
     if (error instanceof HttpError && error.status === 404) {
       notFound();
     }
