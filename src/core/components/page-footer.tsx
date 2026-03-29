@@ -39,13 +39,7 @@ const FOOTER_SX = {
     alignItems: "center",
     gap: 1,
   },
-  socialText: {
-    fontSize: "1.8rem",
-    lineHeight: 1,
-    fontWeight: 700,
-    color: "#2C3035",
-    mr: 1.5,
-  },
+
   iconButton: {
     color: "#2C3035",
     p: 1,
@@ -57,11 +51,14 @@ const FOOTER_SX = {
     borderColor: "rgba(152, 84, 20, 0.45)",
   },
   bottomRow: {
-    pt: 4,
+    pt: 3,
     display: "flex",
     alignItems: "center",
     gap: 1,
     fontSize: "0.85rem",
+  },
+  terms: {
+    fontWeight: 600,
   },
 };
 
@@ -101,19 +98,19 @@ const PageFooter = (): ReactElement => {
           </Box>
           <Divider sx={FOOTER_SX.divider} />
           <Box sx={FOOTER_SX.bottomRow}>
-            <Typography component="span" variant="body2">
+            <Typography component="span" variant="body2" sx={FOOTER_SX.terms}>
               2026 My commerce
             </Typography>
             <Typography component="span" variant="body2">
               •
             </Typography>
-            <Typography component="span" variant="body2">
+            <Typography component="span" variant="body2" sx={FOOTER_SX.terms}>
               Política de Privacidade
             </Typography>
             <Typography component="span" variant="body2">
               •
             </Typography>
-            <Typography component="span" variant="body2">
+            <Typography component="span" variant="body2" sx={FOOTER_SX.terms}>
               Termos de Uso
             </Typography>
           </Box>
