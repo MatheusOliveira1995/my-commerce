@@ -26,12 +26,19 @@ const PRODUCTS_PAGE_LAYOUT_SX = {
 };
 
 export async function generateStaticParams() {
-  const products = await productRepository.getAll();
-  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+  try {
+    const products = await productRepository.getAll();
+    const totalPages = Math.max(
+      1,
+      Math.ceil(products.length / PRODUCTS_PER_PAGE),
+    );
 
-  return Array.from({ length: totalPages }, (_, i) => ({
-    page: String(i + 1),
-  }));
+    return Array.from({ length: totalPages }, (_, i) => ({
+      page: String(i + 1),
+    }));
+  } catch {
+    return [{ page: "1" }];
+  }
 }
 
 export const revalidate = 3600; // Revalidate every 60 minutes
@@ -39,14 +46,18 @@ export const revalidate = 3600; // Revalidate every 60 minutes
 const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
   const { params } = props;
   const { page } = await params;
-  const currentPage = Number(page);
+  const parsedPage = Number(page);
+  const currentPage =
+    Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
 
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: PRODUCT_QUERY_KEYS.page(currentPage, PRODUCTS_PER_PAGE),
-    queryFn: () => productRepository.getPage(currentPage, PRODUCTS_PER_PAGE),
-  });
+  try {
+    await queryClient.prefetchQuery({
+      queryKey: PRODUCT_QUERY_KEYS.page(currentPage, PRODUCTS_PER_PAGE),
+      queryFn: () => productRepository.getPage(currentPage, PRODUCTS_PER_PAGE),
+    });
+  } catch {}
 
   return (
     <Stack sx={PRODUCTS_PAGE_LAYOUT_SX.contentStack}>
