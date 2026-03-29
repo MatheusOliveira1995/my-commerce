@@ -1,4 +1,5 @@
 import RootProvider from "@/core/providers/root-provider";
+import MenuToolbar from "@/core/components/menu-toolbar";
 import { Container } from "@mui/material";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={roboto.className}>
         <RootProvider>
           <Container maxWidth="lg" sx={GLOBAL_LAYOUT_SX.container}>
+            <MenuToolbar />
             {children}
           </Container>
         </RootProvider>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">My commerce logo</title>
+  <desc id="logoDesc">Logo com icone moderno inspirado em grafico de crescimento e texto My commerce visivel.</desc>
+  <defs>
+    <linearGradient id="mcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBD39A" />
+      <stop offset="100%" stop-color="#F5A33A" />
+    </linearGradient>
+    <linearGradient id="mcSoft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FBD39A" stop-opacity="0.46" />
+      <stop offset="100%" stop-color="#F5A33A" stop-opacity="0.08" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(8,8)">
+    <rect x="0" y="0" width="184" height="184" rx="34" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="3" />
+
+    <rect x="42" y="104" width="18" height="44" rx="7" fill="url(#mcSoft)" />
+    <rect x="72" y="90" width="18" height="58" rx="7" fill="url(#mcSoft)" />
+    <rect x="102" y="74" width="18" height="74" rx="7" fill="url(#mcSoft)" />
+    <rect x="132" y="56" width="18" height="92" rx="7" fill="url(#mcSoft)" />
+
+    <path
+      d="M42 120 L81 104 L112 86 L142 64"
+      fill="none"
+      stroke="url(#mcGrad)"
+      stroke-width="10"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M132 58 L146 60 L140 74"
+      fill="none"
+      stroke="url(#mcGrad)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M45 54 H62 L71 124 H139"
+      fill="none"
+      stroke="#E9A451"
+      stroke-width="6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.85"
+    />
+    <circle cx="83" cy="136" r="6" fill="#E9A451" />
+    <circle cx="124" cy="136" r="6" fill="#E9A451" />
+  </g>
+
+  <g transform="translate(220,0)">
+    <text
+      x="0"
+      y="108"
+      fill="#1F2124"
+      font-family="Poppins, Montserrat, Segoe UI, Arial, sans-serif"
+      font-size="78"
+      font-weight="800"
+      letter-spacing="-0.8"
+      dominant-baseline="middle"
+    >
+      My commerce
+    </text>
+    <rect x="2" y="138" width="470" height="8" rx="4" fill="#F5A33A" opacity="0.35" />
+  </g>
+</svg>
