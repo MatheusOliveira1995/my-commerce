@@ -37,6 +37,7 @@ export async function generateStaticParams() {
       page: String(i + 1),
     }));
   } catch (e) {
+    console.error("Failed to generate static params for products page", e);
     return [{ page: "1" }];
   }
 }
