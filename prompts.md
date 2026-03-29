@@ -25,3 +25,25 @@
 ## Fase 4 - Ajustes de CSS e Responsividade
 
 - As margins e a existência do padding mudam quando se tratar de um dispositivo mobile, por conta da responsividade. O que o MUI tem a oferecer para lidar com esse cenário? Crie neste arquivo uma estrutura de loading utilizando Skeletons do MUI que se encaixe com a estrutura do layout da página.Fase 5 - Lógica de paginação server-sideA implementação atual de geração das páginas estáticas tem um problema em que todas as páginas geradas no build conterão o retorno do endpoint /products duplicados, pois a paginação está sendo realizada no client-side através dos dados hidratados. Acho interessante criarmos um plano de alteração que deverá migrar a lógica de paginação para o repository, para evitar custos de build e tamanho da hidratação desnecessários. Gere um plano de alteração em markdown, mas ainda não execute até que eu valide.
+
+## Fase 5 - Testes
+
+- Baseado no arquivo use-products-hook.test.ts implemente testes para o hook "useProducts" a fim de garantir os seguintes comportamentos:
+
+* Um array vazio deve ser retornado enquanto a página carrega, o valor de isLoading deve ser true.
+* Um array de Product deve ser retornado, bem como o total de páginas após um fetch bem sucedido ou após a hidratação do cache.
+* O método getPage deve ser corretamente chamado com os parâmetros fornecidos.
+
+- Baseado no arquivo use-product-hook.test.ts implemente testes para o hook "use Product" a fim de garantir os seguintes comportamentos:
+
+* Um array vazio deve ser retornado enquanto a página carrega, o valor de isLoading deve ser true.
+* Um Product deve ser retornado após um fetch bem sucedido.
+
+- Baseado no arquivo product-repository.test.ts implemente testes para a classe ProductHttpRepository a fim de garantir os seguintes comportamentos:
+
+* O método getAll deve chamar o endpoint /products e trazer todos os dados da api
+* Se houverem chamadas concorrentes, ou seja, se o endpoint for chamado novamente enquanto a chamada anterior ainda não foi resolvida, a chamada não deve ser disparada e a mesma promise atual deve ser retornada para evitar chamadas desnecessárias ao backend.
+* Deve lidar corretamente com o estado de erro retornado pela API.
+* O método getPage deve os dados corretos conforme o número de página. O cache implementado no getAll deve ser utilizado no getPage.
+* O método getPage deve calcular corretamente a quantidade de páginas
+* O método getId deve chamar a api com o id fornecido e retornar os dados corretamente.
