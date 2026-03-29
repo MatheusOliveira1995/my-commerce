@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Commerce
 
-## Getting Started
+E-commerce application developed as a technical challenge using Next.js App Router, TypeScript, Material UI, and TanStack Query.
 
-First, run the development server:
+## Project Goal
+
+The project implements a product catalog with:
+
+- paginated product listing;
+- product detail page;
+- data fetching with React Query;
+- hybrid rendering strategy (SSG/ISR for listing and SSR for detail pages);
+- architecture based on Repository Pattern and SOLID principles.
+
+## Technologies Used
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript (strict)
+- Material UI (MUI)
+- TanStack Query v5 (React Query)
+- Axios
+- Jest + Testing Library
+
+## Technical Structure (Summary)
+
+- src/app: routes and rendering (layout, listing, and detail)
+- src/domain/products: domain layer (hooks, models, repository, and product components)
+- src/core: shared components, HTTP client, theme, and providers
+
+Applied patterns:
+
+- Repository Pattern to decouple API consumption;
+- hooks to centralize data logic (useProducts and useProduct);
+- presentational components;
+- internal import alias @/\*.
+
+## Running the Project
+
+Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Start development mode:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build and run in production mode:
 
-## Learn More
+```bash
+yarn build
+yarn start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Running Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run all tests:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+yarn test
+```
 
-## Deploy on Vercel
+Run in watch mode:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+yarn test:watch
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run with coverage:
+
+```bash
+yarn test:coverage
+```
+
+Run a specific test file:
+
+```bash
+yarn test __tests__/hooks/use-product-hook.test.ts --no-coverage
+```
+
+## Quality and Tooling
+
+- ESLint for linting and code quality;
+- test setup with next/jest;
+- jsdom test environment;
+- @testing-library/jest-dom for DOM matchers.
