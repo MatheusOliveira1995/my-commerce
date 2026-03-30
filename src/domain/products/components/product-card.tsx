@@ -90,6 +90,7 @@ const ProductCard = (props: ProductCardProps): ReactElement => {
             <Button
               variant="outlined"
               component={Link}
+              prefetch={false}
               size="large"
               fullWidth
               href={"/products/" + product.id}
