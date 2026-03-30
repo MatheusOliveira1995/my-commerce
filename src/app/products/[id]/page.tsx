@@ -41,11 +41,6 @@ const ProductsDetailPage = async (
     throw error;
   }
 
-  const queryState = queryClient.getQueryState(PRODUCT_QUERY_KEYS.detail(id));
-  if (queryState?.status === "error") {
-    console.error("Prefetch failed on server", queryState.error);
-  }
-
   return (
     <Box>
       <HydrationBoundary state={dehydrate(queryClient)}>
