@@ -2,6 +2,11 @@
 
 E-commerce application developed as a technical challenge using Next.js App Router, TypeScript, Material UI, and TanStack Query.
 
+## Live Demo
+
+The site is available at:
+https://my-commerce-five-mu.vercel.app/products/page/1
+
 ## Project Goal
 
 The project implements a product catalog with:
