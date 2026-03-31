@@ -7,7 +7,7 @@ E-commerce application developed as a technical challenge using Next.js App Rout
 The site is available at:
 https://my-commerce-five-mu.vercel.app/products/page/1
 
-Obs: Por algum motivo externo a api `fakestore` está bloqueando (403) chamadas do server da vercel para a obtenção dos dados pra popular as páginas SSG e SSR. Por isso a página está sendo retornada sem os dados dos produtos serializados. Com isto, a página é populada no client-side. Para validar a geração das páginas estáticas SSG e também as dinâmicas SSR, recomendo fazer um build e rodar o projeto localmente.
+Obs: Por algum motivo externo, a api `fakestore` está bloqueando (403) chamadas do server da vercel para a obtenção dos dados pra popular as páginas SSG e SSR. Por isso a página está sendo retornada sem os dados dos produtos serializados. Nesse caso os dados estão sendo obtidos no client-side. Para validar a geração das páginas estáticas SSG e também as dinâmicas SSR, recomendo fazer um build e rodar o projeto localmente.
 
 ## Project Goal
 
