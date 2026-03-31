@@ -1,9 +1,8 @@
 import RootProvider from "@/core/providers/root-provider";
-import MenuToolbar from "@/core/components/menu-toolbar";
-import { Container } from "@mui/material";
+import { MenuToolbar, PageFooter } from "@/core/components";
+import { Box, Container } from "@mui/material";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import PageFooter from "@/core/components/page-footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -18,7 +17,13 @@ export const metadata: Metadata = {
 };
 
 const GLOBAL_LAYOUT_SX = {
+  wrapper: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+  },
   container: {
+    flex: 1,
     py: { xs: 2, md: 3 },
     px: { xs: 2, sm: 3, md: 4 },
   },
@@ -33,11 +38,13 @@ export default function RootLayout({
     <html lang="pt-BR" className={roboto.variable}>
       <body className={roboto.className}>
         <RootProvider>
-          <Container maxWidth="lg" sx={GLOBAL_LAYOUT_SX.container}>
-            <MenuToolbar />
-            {children}
-          </Container>
-          <PageFooter />
+          <Box sx={GLOBAL_LAYOUT_SX.wrapper}>
+            <Container maxWidth="lg" sx={GLOBAL_LAYOUT_SX.container}>
+              <MenuToolbar />
+              {children}
+            </Container>
+            <PageFooter />
+          </Box>
         </RootProvider>
       </body>
     </html>

@@ -1,8 +1,7 @@
 "use client";
 
 import { GridList } from "@/core/components";
-import { ProductCard } from "@/domain/products/components";
-import { ProductListSkeleton } from "@/domain/products/components";
+import { ProductCard, ProductCardSkeleton } from "@/domain/products/components";
 import { useProducts } from "@/domain/products/hooks";
 import { PRODUCTS_PER_PAGE } from "@/domain/products/constants";
 import { Product } from "@/domain/products/models/product";
@@ -35,7 +34,7 @@ export default function ProductList(props: ProductListProps) {
         size: { xs: 4, sm: 4, md: 3, lg: 3, xl: 3 },
       }}
       renderItem={(product) => <ProductCard product={product} />}
-      renderSkeleton={() => <ProductListSkeleton />}
+      renderSkeleton={() => <ProductCardSkeleton />}
     />
   );
 }

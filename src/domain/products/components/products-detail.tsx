@@ -1,7 +1,7 @@
 "use client";
 import { ReactElement, useState } from "react";
 import { useProduct } from "@/domain/products/hooks";
-import ProductDetailSkeleton from "@/domain/products/components/product-detail-skeleton";
+import ProductDetailSkeleton from "./product-detail-skeleton";
 import Image from "next/image";
 import {
   Box,
@@ -102,19 +102,11 @@ const ProductInfoDetail = (props: ProductInfoDetailProps): ReactElement => {
 
 const ProductsDetail = (props: ProductsDetailProps): ReactElement => {
   const { id } = props;
-  const { data, isLoading, isError } = useProduct(id);
+  const { data, isLoading } = useProduct(id);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   if (isLoading) {
     return <ProductDetailSkeleton />;
-  }
-
-  if (isError) {
-    return (
-      <Typography variant="body1">
-        Nao foi possivel carregar os detalhes do produto.
-      </Typography>
-    );
   }
 
   if (!data) {

@@ -9,5 +9,6 @@ export const useProduct = (id: number) => {
     queryKey: PRODUCT_QUERY_KEYS.detail(id),
     queryFn: () => productRepository.getById(id),
     enabled: Boolean(id),
+    throwOnError: true,
   });
 };
