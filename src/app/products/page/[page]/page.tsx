@@ -44,7 +44,7 @@ export async function generateStaticParams() {
   }
 }
 
-export const revalidate = 3600; // Revalidate every 60 minutes
+export const revalidate = 1800; // Revalidate every 30 minutes
 
 const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
   const { params } = props;
@@ -52,7 +52,6 @@ const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
   const parsedPage = Number(page);
   const currentPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-
   const queryClient = getQueryClient();
 
   try {
@@ -64,8 +63,6 @@ const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
     if (error instanceof HttpError && error.status === 404) {
       notFound();
     }
-
-    throw error;
   }
 
   return (

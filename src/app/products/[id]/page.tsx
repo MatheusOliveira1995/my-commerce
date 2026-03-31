@@ -37,8 +37,6 @@ const ProductsDetailPage = async (
     if (error instanceof HttpError && error.status === 404) {
       notFound();
     }
-
-    throw error;
   }
 
   return (

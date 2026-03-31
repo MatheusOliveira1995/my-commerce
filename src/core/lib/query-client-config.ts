@@ -5,7 +5,8 @@ export const queryClientConfig: QueryClientConfig = {
     queries: {
       staleTime: 60 * 1000,
       gcTime: 1000 * 60 * 60 * 24,
-      retry: 1,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       refetchOnWindowFocus: false,
     },
   },

@@ -5,10 +5,16 @@ import { productRepository } from "@/domain/products/repositories";
 import { PRODUCT_QUERY_KEYS } from "@/domain/products/constants";
 
 export const useProduct = (id: number) => {
-  return useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: PRODUCT_QUERY_KEYS.detail(id),
     queryFn: () => productRepository.getById(id),
     enabled: Boolean(id),
-    throwOnError: true,
   });
+
+  return {
+    data,
+    isLoading: isPending,
+    isError,
+    refetch,
+  };
 };

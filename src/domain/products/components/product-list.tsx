@@ -1,6 +1,6 @@
 "use client";
 
-import { GridList } from "@/core/components";
+import { ErrorComponent, GridList } from "@/core/components";
 import { ProductCard, ProductCardSkeleton } from "@/domain/products/components";
 import { useProducts } from "@/domain/products/hooks";
 import { PRODUCTS_PER_PAGE } from "@/domain/products/constants";
@@ -12,7 +12,11 @@ interface ProductListProps {
 
 export default function ProductList(props: ProductListProps) {
   const { page } = props;
-  const { data, total, isLoading } = useProducts(page);
+  const { data, total, isLoading, isError, refetch } = useProducts(page);
+
+  if (isError) {
+    return <ErrorComponent handleRetry={refetch} />;
+  }
 
   return (
     <GridList<Product>
