@@ -30,10 +30,9 @@ const PRODUCTS_PAGE_LAYOUT_SX = {
 
 export async function generateStaticParams() {
   try {
-    const products = await productRepository.getAll();
-    const totalPages = Math.max(
+    const { totalPages } = await productRepository.getPage(
       1,
-      Math.ceil(products.length / PRODUCTS_PER_PAGE),
+      PRODUCTS_PER_PAGE,
     );
 
     return Array.from({ length: totalPages }, (_, i) => ({

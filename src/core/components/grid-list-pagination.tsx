@@ -9,18 +9,18 @@ interface GridListPaginationProps {
   total: number;
 }
 
-const GridListPagination = ({
-  page,
-  total,
-}: GridListPaginationProps): ReactElement => {
+const GridListPagination = (props: GridListPaginationProps): ReactElement => {
+  const { page, total } = props;
   const pathname = usePathname();
   const { push } = useRouter();
   const [isPending, startTransition] = useTransition();
+  const normalizedTotal = Math.max(1, total);
+  const normalizedPage = Math.min(Math.max(page, 1), normalizedTotal);
 
   const handlePageChange = (_: ChangeEvent<unknown>, value: number) => {
     const basePath = pathname.replace(/\/\d+$/, "");
     startTransition(() => {
-      push(basePath + "/" + value);
+      push(basePath + "/" + value, { scroll: false });
     });
   };
 
@@ -36,9 +36,9 @@ const GridListPagination = ({
       <Pagination
         variant="outlined"
         shape="rounded"
-        count={total}
+        count={normalizedTotal}
         onChange={handlePageChange}
-        page={page}
+        page={normalizedPage}
         disabled={isPending}
       />
       {isPending && <CircularProgress size={20} />}

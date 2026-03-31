@@ -20,13 +20,13 @@ const ProductListSkeleton = (): ReactElement => {
   return (
     <Stack sx={PRODUCT_LIST_SKELETON_SX.contentStack}>
       <Typography variant="h4">Produtos</Typography>
-
       <Paper sx={PRODUCT_LIST_SKELETON_SX.paper}>
         <GridList<Record<string, never>>
           data={[]}
           isLoading
           page={1}
           total={1}
+          showPagination={false}
           skeletonCount={PRODUCTS_PER_PAGE}
           gridContainerProps={{
             container: true,

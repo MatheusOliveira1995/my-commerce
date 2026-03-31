@@ -1,4 +1,4 @@
-import { Box, Grid, Skeleton, Stack } from "@mui/material";
+import { Box, CircularProgress, Grid, Skeleton, Stack } from "@mui/material";
 import { ComponentProps, ReactElement, ReactNode, Suspense } from "react";
 import GridListPagination from "@/core/components/grid-list-pagination";
 
@@ -7,6 +7,7 @@ interface GridListProps<T> {
   renderItem: (item: T) => ReactNode;
   renderSkeleton?: () => ReactNode;
   total: number;
+  showPagination?: boolean;
   skeletonCount?: number;
   gridContainerProps?: ComponentProps<typeof Grid>;
   gridItemProps?: Omit<ComponentProps<typeof Grid>, "container" | "children">;
@@ -21,6 +22,7 @@ const GridList = <T extends object>(props: GridListProps<T>): ReactElement => {
     renderItem,
     renderSkeleton,
     total = 0,
+    showPagination = true,
     skeletonCount = 8,
     gridContainerProps = {},
     gridItemProps = {},
@@ -46,11 +48,13 @@ const GridList = <T extends object>(props: GridListProps<T>): ReactElement => {
               </Grid>
             ))}
       </Grid>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Suspense fallback={null}>
-          <GridListPagination page={page} total={total} />
-        </Suspense>
-      </Box>
+      {showPagination && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Suspense fallback={<CircularProgress size={20} />}>
+            <GridListPagination page={page} total={total} />
+          </Suspense>
+        </Box>
+      )}
     </Stack>
   );
 };

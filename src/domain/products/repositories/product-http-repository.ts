@@ -6,65 +6,93 @@ import {
 } from "@/domain/products/constants";
 import { IProductRepository } from "./product-repository.interface";
 
-const PRODUCTS_CACHE_TTL_MS = 1000 * 60 * 5;
+interface ProductApiDto {
+  _id: number;
+  title?: string;
+  isNew?: boolean;
+  oldPrice?: string;
+  price?: number;
+  discountedPrice?: number;
+  description?: string;
+  category?: string;
+  type?: string;
+  brand?: string;
+  size?: Array<string>;
+  image?: string;
+  rating?: number;
+  stock?: number;
+}
+
+interface ProductListApiResponseDto {
+  data: Array<ProductApiDto>;
+  totalProducts: number;
+  totalPages: number;
+  currentPage: number;
+  perPage: number;
+}
+
+const toNumber = (value: unknown, fallback: number): number => {
+  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+};
+
+const toString = (value: unknown): string => {
+  return typeof value === "string" ? value : "";
+};
 
 export class ProductHttpRepository implements IProductRepository {
-  private productsCache: Array<Product> | null = null;
+  private mapDtoToProduct(dto: ProductApiDto): Product {
+    return {
+      id: toNumber(dto._id, 0),
+      title: toString(dto.title),
+      price: toNumber(dto.price, 0),
+      description: toString(dto.description),
+      category: toString(dto.category),
+      image: toString(dto.image),
+      rating: {
+        rate: toNumber(dto.rating, 0),
+        count: toNumber(dto.stock, 0),
+      },
+    };
+  }
 
-  private productsCacheExpiresAt = 0;
+  private getProductsFromPayload(
+    payload: ProductListApiResponseDto,
+  ): Array<ProductApiDto> {
+    return Array.isArray(payload.data) ? payload.data : [];
+  }
 
-  private pendingProductsRequest: Promise<Array<Product>> | null = null;
-
-  async getAll(): Promise<Array<Product>> {
-    const now = Date.now();
-
-    if (this.productsCache && now < this.productsCacheExpiresAt) {
-      return this.productsCache;
-    }
-
-    if (this.pendingProductsRequest) {
-      return this.pendingProductsRequest;
-    }
-
-    this.pendingProductsRequest = httpClient
-      .get<Array<Product>>(PRODUCT_ENDPOINTS.list)
-      .then((response) => {
-        this.productsCache = response.data;
-        this.productsCacheExpiresAt = Date.now() + PRODUCTS_CACHE_TTL_MS;
-        return response.data;
-      })
-      .finally(() => {
-        this.pendingProductsRequest = null;
-      });
-
-    return this.pendingProductsRequest;
+  private mapDtoListToProducts(dtos: Array<ProductApiDto>): Array<Product> {
+    return dtos.map((dto) => this.mapDtoToProduct(dto));
   }
 
   async getPage(
     page: number,
     perPage: number = PRODUCTS_PER_PAGE,
   ): Promise<ProductsPageResult> {
-    const products = await this.getAll();
-    const safePage = Math.max(1, page);
-    const startIndex = (safePage - 1) * perPage;
-    const items = products.slice(startIndex, startIndex + perPage);
-    const totalItems = products.length;
-    const totalPages = Math.ceil(totalItems / perPage);
+    const data = await httpClient
+      .get<ProductListApiResponseDto>(PRODUCT_ENDPOINTS.list, {
+        params: { page, perPage },
+      })
+      .then((response) => {
+        const products = this.getProductsFromPayload(response.data);
+        const mappedProducts = this.mapDtoListToProducts(products);
+        return {
+          items: mappedProducts,
+          page: toNumber(response.data.currentPage, 0),
+          totalItems: toNumber(response.data.totalProducts, 0),
+          totalPages: toNumber(response.data.totalPages, 0),
+          perPage: toNumber(response.data.perPage, 0),
+        };
+      });
 
-    return {
-      items,
-      page: safePage,
-      perPage,
-      totalItems,
-      totalPages,
-    };
+    return data;
   }
 
   async getById(id: number): Promise<Product> {
-    const { data } = await httpClient.get<Product>(
+    const { data } = await httpClient.get<ProductApiDto>(
       PRODUCT_ENDPOINTS.detail(id),
     );
-    return data;
+    return this.mapDtoToProduct(data);
   }
 }
 
