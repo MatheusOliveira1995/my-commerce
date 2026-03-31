@@ -7,8 +7,6 @@ E-commerce application developed as a technical challenge using Next.js App Rout
 The site is available at:
 https://my-commerce-five-mu.vercel.app/products/page/1
 
-Obs: Por algum motivo externo, a api `fakestore` está bloqueando (403) chamadas do server da vercel para a obtenção dos dados pra popular as páginas SSG e SSR. Por isso a página está sendo retornada sem os dados dos produtos serializados. Nesse caso os dados estão sendo obtidos no client-side. Para validar a geração das páginas estáticas SSG e também as dinâmicas SSR, recomendo fazer um build e rodar o projeto localmente.
-
 ## Project Goal
 
 The project implements a product catalog with:
@@ -18,6 +16,10 @@ The project implements a product catalog with:
 - data fetching with React Query;
 - hybrid rendering strategy (SSG/ISR for listing and SSR for detail pages);
 - architecture based on Repository Pattern and SOLID principles.
+
+## Data Source
+
+Product data is provided by the [Fake Store API (ReactBD)](https://fakestoreapi.reactbd.com/), which exposes endpoints for paginated product listing and product detail.
 
 ## Technologies Used
 
