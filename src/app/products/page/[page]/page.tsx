@@ -8,6 +8,7 @@ import {
   PRODUCTS_PER_PAGE,
 } from "@/domain/products/constants";
 import { ProductList } from "@/domain/products/components";
+import { unstable_noStore as noStore } from "next/cache";
 import { notFound } from "next/navigation";
 import { HttpError } from "@/core/lib/http-error";
 
@@ -63,6 +64,8 @@ const ProductsPage = async (props: PageProps): Promise<ReactElement> => {
     if (error instanceof HttpError && error.status === 404) {
       notFound();
     }
+
+    noStore();
   }
 
   return (
